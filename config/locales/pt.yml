@@ -1,0 +1,5 @@
+pt:
+  activerecord:
+    attributes:
+      month:
+        name: "Nome"
