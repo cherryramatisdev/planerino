@@ -25,7 +25,7 @@ class MonthsController < ApplicationController
 
     respond_to do |format|
       if @month.save
-        format.html { redirect_to months_path, notice: "Month was successfully created." }
+        format.html { redirect_to months_path, notice: "Mes foi criado com sucesso" }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -36,7 +36,7 @@ class MonthsController < ApplicationController
   def update
     respond_to do |format|
       if @month.update(month_params)
-        format.html { redirect_to month_url(@month), notice: "Month was successfully updated." }
+        format.html { redirect_to month_url(@month), notice: "Mes foi atualizado com sucesso" }
         format.json { render :show, status: :ok, location: @month }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,7 +50,7 @@ class MonthsController < ApplicationController
     @month.destroy
 
     respond_to do |format|
-      format.html { redirect_to months_url, notice: "Month was successfully destroyed." }
+      format.html { redirect_to months_url, notice: "Mes foi excluido com sucesso" }
       format.json { head :no_content }
     end
   end
