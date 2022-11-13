@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root "month#index"
+  resources :months
+  root "months#index"
 end
