@@ -5,9 +5,9 @@
 
   <% unless @months.empty? %>
     <% @months.each do |month| %>
-      <div class="w-full bg-gray-200 rounded-lg flex items-center justify-center">
-        <%= link_to month.name, month_path(month) %>
-      </div>
+      <%= link_to month_path(month), class: "w-full bg-gray-200 rounded-lg flex items-center justify-center" do %>
+        <%= month.name %>
+      <% end %>
     <% end %>
   <% end %>
 </div>
