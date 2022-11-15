@@ -1,8 +1,23 @@
+<%= render 'layouts/header', label: 'Adicionar um novo debito', path: new_debit_path %>
+
 <div class="mx-auto md:w-2/3 w-full flex">
   <div class="mx-auto">
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
     <h1>Debitos relacionados a <%= @month.name %></h1>
+
+    <% @owners.each do |owner| %>
+      <%= owner.name %>
+      <%# TODO: refactor this %>
+      <% owner.debit.group_by {|value| value[:title]}.each do |debit| %>
+        <div>
+          <%= debit[0] %>
+          <% debit[1].each do |d| %>
+            <%= link_to d.price, update_paid_url({id: d.id, month_id: @month.id}), class: ("text-red-500" if d.paid) %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </div>

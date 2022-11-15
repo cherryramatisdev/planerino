@@ -1,0 +1,50 @@
+<%= form_with(model: debit, class: "contents") do |form| %>
+  <% if debit.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(debit.errors.count, "error") %> prohibited this debit from being saved:</h2>
+
+      <ul>
+        <% debit.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :price %>
+    <%= form.number_field :price, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :paid %>
+    <%= form.check_box :paid, class: "block mt-2 h-5 w-5" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :owner_id %>
+    <% if Owner.all.empty? %>
+      <%= form.text_field :owner_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <% else %>
+      <%= form.select :owner_id, Owner.all.collect { |o| [ o.name, o.id ] }, {}, {include_blank: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"} %>
+    <% end %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :month_id %>
+    <% if Month.all.empty? %>
+      <%= form.text_field :month_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <% else %>
+      <%= form.select :month_id, Month.all.collect { |o| [ o.name, o.id ] }, {}, {include_blank: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"} %>
+    <% end %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

@@ -1,0 +1,32 @@
+<div id="<%= dom_id debit %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Title:</strong>
+    <%= debit.title %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Price:</strong>
+    <%= debit.price %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Paid:</strong>
+    <%= debit.paid %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Owner:</strong>
+    <%= debit.owner_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Month:</strong>
+    <%= debit.month_id %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this debit", debit, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this debit', edit_debit_path(debit), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

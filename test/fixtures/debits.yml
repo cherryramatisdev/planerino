@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  price: 1
+  paid: false
+  owner: one
+  month: one
+
+two:
+  title: MyString
+  price: 1
+  paid: false
+  owner: two
+  month: two

@@ -8,6 +8,7 @@ class MonthsController < ApplicationController
 
   # GET /months/1 or /months/1.json
   def show
+    @owners = Owner.all
   end
 
   # GET /months/new
