@@ -3,3 +3,9 @@ pt:
     attributes:
       month:
         name: "Nome"
+      owner:
+        name: "Dono"
+      debit:
+        title: "Titulo"
+        price: "Preco"
+        paid: "Pago"
