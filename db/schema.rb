@@ -10,11 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_13_220955) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_14_011918) do
+  create_table "debits", force: :cascade do |t|
+    t.string "title"
+    t.integer "price"
+    t.boolean "paid"
+    t.integer "owner_id", null: false
+    t.integer "month_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["month_id"], name: "index_debits_on_month_id"
+    t.index ["owner_id"], name: "index_debits_on_owner_id"
+  end
+
   create_table "months", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "owners", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "debits", "months"
+  add_foreign_key "debits", "owners"
 end
