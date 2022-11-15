@@ -1,4 +1,6 @@
 class Debit < ApplicationRecord
+  before_save :transform_title
+
   validates :title, :presence => {:message => " nao pode ser vazio"}
   validates :price, :presence => {:message => " nao pode ser vazio"}
   validates :owner, :presence => {:message => "Precisa informar dono"}
@@ -10,5 +12,9 @@ class Debit < ApplicationRecord
     debit = self.find(id)
     
     self.update(debit.id, paid: !debit.paid)
+  end
+
+  def transform_title
+    self.title.upcase!
   end
 end

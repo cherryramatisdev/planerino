@@ -13,12 +13,17 @@
 
   <div class="my-5">
     <%= form.label :title %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :title, list: "debit_title_name", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <datalist id="debit_title_name">
+      <% Debit.all.uniq {|debit| debit[:title] }.each do |debit| %>
+        <option value="<%= debit[:title] %>">
+      <% end %>
+    </datalist>
   </div>
 
   <div class="my-5">
     <%= form.label :price %>
-    <%= form.text_field :price, pattern: "[0-9]+([\.,][0-9]+)", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :price, pattern: "[0-9]+([\.,][0-9]+)?", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="my-5">
@@ -28,11 +33,12 @@
 
   <div class="my-5">
     <%= form.label :owner_id %>
-    <% if Owner.all.empty? %>
-      <%= form.text_field :owner_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-    <% else %>
-      <%= form.select :owner_id, Owner.all.collect { |o| [ o.name, o.id ] }, {}, {include_blank: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"} %>
-    <% end %>
+    <%= form.text_field :owner_id, list: "debit_owner", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <datalist id="debit_owner">
+      <% Owner.all.each do |owner| %>
+        <option value="<%= owner[:name] %>">
+      <% end %>
+    </datalist>
   </div>
 
   <div class="my-5">
