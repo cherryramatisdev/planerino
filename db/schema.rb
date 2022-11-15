@@ -13,7 +13,7 @@
 ActiveRecord::Schema[7.0].define(version: 2022_11_14_011918) do
   create_table "debits", force: :cascade do |t|
     t.string "title"
-    t.integer "price"
+    t.float "price"
     t.boolean "paid"
     t.integer "owner_id", null: false
     t.integer "month_id", null: false
