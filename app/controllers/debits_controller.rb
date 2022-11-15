@@ -21,22 +21,39 @@ class DebitsController < ApplicationController
 
   # GET /update_paid
   def update_paid
-    @updated = Debit.toggle_paid(params[:id])
-    respond_to do |format|
-      if @updated
-        format.html { redirect_to month_path(params[:month_id]) }
-      else
-        format.json { render json: @updated.errors, status: :unprocessable_entity }
+    if params[:update_by_debit_title] != nil
+      # TODO: Make this toggle smartly?
+      debits_by_title = Debit.where(title: params[:update_by_debit_title])
+      @updated = debits_by_title.update_all(paid: !debits_by_title.first.paid)
+      respond_to do |format|
+        if @updated
+          format.html { redirect_to month_path(params[:month_id]) }
+        else
+          format.json { render json: @updated.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @updated = Debit.toggle_paid(params[:id])
+      respond_to do |format|
+        if @updated
+          format.html { redirect_to month_path(params[:month_id]) }
+        else
+          format.json { render json: @updated.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   # POST /debits or /debits.json
   def create
+    price = debit_params[:price].gsub(",", ".")
+
+    puts "TESTE ->", price
+
     if numeric?(debit_params[:owner_id])
       @debit = Debit.new({
         title: debit_params[:title],
-        price: debit_params[:price],
+        price: price,
         paid: debit_params[:paid],
         owner_id: debit_params[:owner_id],
         month_id: debit_params[:month_id]
@@ -45,7 +62,7 @@ class DebitsController < ApplicationController
       owner = Owner.find_or_create_by(name: debit_params[:owner_id])
       @debit = Debit.new({
         title: debit_params[:title],
-        price: debit_params[:price],
+        price: price,
         paid: debit_params[:paid],
         owner_id: owner.id,
         month_id: debit_params[:month_id]
@@ -54,7 +71,7 @@ class DebitsController < ApplicationController
 
     respond_to do |format|
       if @debit.save
-        format.html { redirect_to debit_url(@debit), notice: "Debit was successfully created." }
+        format.html { redirect_to month_url(debit_params[:month_id]), notice: "Debito foi adicionado com sucesso." }
         format.json { render :show, status: :created, location: @debit }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -67,7 +84,7 @@ class DebitsController < ApplicationController
   def update
     respond_to do |format|
       if @debit.update(debit_params)
-        format.html { redirect_to debit_url(@debit), notice: "Debit was successfully updated." }
+        format.html { redirect_to debit_url(@debit), notice: "Debito foi atualizado com sucesso" }
         format.json { render :show, status: :ok, location: @debit }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -81,7 +98,7 @@ class DebitsController < ApplicationController
     @debit.destroy
 
     respond_to do |format|
-      format.html { redirect_to debits_url, notice: "Debit was successfully destroyed." }
+      format.html { redirect_to debits_url, notice: "Debito foi excluido com sucesso" }
       format.json { head :no_content }
     end
   end

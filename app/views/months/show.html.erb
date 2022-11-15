@@ -1,23 +1,27 @@
 <%= render 'layouts/header', label: 'Adicionar um novo debito', path: new_debit_path %>
 
 <div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
+  <div class="w-full">
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
     <h1>Debitos relacionados a <%= @month.name %></h1>
+    <hr />
 
-    <% @owners.each do |owner| %>
-      <%= owner.name %>
-      <%# TODO: refactor this %>
-      <% owner.debit.group_by {|value| value[:title]}.each do |debit| %>
-        <div>
-          <%= debit[0] %>
-          <% debit[1].each do |d| %>
-            <%= link_to d.price, update_paid_url({id: d.id, month_id: @month.id}), class: ("text-red-500" if d.paid) %>
-          <% end %>
+    <div class="w-full grid grid-cols-2 gap-2">
+      <% @owners.each do |owner| %>
+        <div class="flex flex-col gap-2 bg-gray-200 my-2 rounded-lg p-2">
+          Pagante: <%= owner.name %>
+        <% owner.group_by_same_title.each do |debit| %>
+          <div class="">
+            <%= link_to debit[0], update_paid_url({month_id: @month.id, update_by_debit_title: debit[0] }) %>
+            <% debit[1].each do |d| %>
+              <%= link_to number_to_currency(d.price, unit: 'R$ '), update_paid_url({id: d.id, month_id: @month.id, update_paid_url: nil}), class: ("text-red-500" if d.paid) %> +
+            <% end %>
+          </div>
+        <% end %>
         </div>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </div>
