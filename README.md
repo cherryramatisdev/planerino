@@ -1,24 +1,8 @@
-# README
+# Planerino - Under development
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A cool app to simplify your financial life!
 
-Things you may want to cover:
+## To-dos
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Add a way to delete and edit a debit
+- Add a way to delete and edit an owner.
