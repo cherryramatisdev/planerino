@@ -1,7 +1,7 @@
 class Owner < ApplicationRecord
   before_save :transform_name
 
-  validates :name, presence: { message: ' nao pode ser vazio' }
+  validates :name, presence: { message: ' deve ser informado' }
   has_many :debit, dependent: :destroy
 
   def group_by_same_title

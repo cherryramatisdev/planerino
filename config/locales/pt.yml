@@ -1,5 +1,11 @@
 pt:
   activerecord:
+    errors:
+      models:
+        debit:
+          attributes:
+            owner:
+              required: "é preciso informar o nome do dono para o debito em questão"
     attributes:
       month:
         name: "Nome"
@@ -7,5 +13,6 @@ pt:
         name: "Dono"
       debit:
         title: "Titulo"
-        price: "Preco"
+        price: "Preço"
         paid: "Pago"
+        owner_id: "Dono"

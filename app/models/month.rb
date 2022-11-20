@@ -1,5 +1,5 @@
 class Month < ApplicationRecord
-  validates :name, presence: { message: ' nao pode ser vazio' }
+  validates :name, presence: { message: ' deve ser informado' }
 
   has_many :debit, dependent: :destroy
 

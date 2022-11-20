@@ -1,9 +1,8 @@
 class Debit < ApplicationRecord
   before_save :transform_title
 
-  validates :title, presence: { message: ' nao pode ser vazio' }
-  validates :price, presence: { message: ' nao pode ser vazio' }
-  validates :owner, presence: { message: 'Precisa informar dono' }
+  validates :title, presence: { message: ' deve ser informado' }
+  validates :price, presence: { message: ' deve ser informado' }
 
   belongs_to :owner
   belongs_to :month

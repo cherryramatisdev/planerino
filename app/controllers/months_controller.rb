@@ -1,5 +1,5 @@
 class MonthsController < ApplicationController
-  before_action :set_month, only: %i[ show edit update destroy ]
+  before_action :set_month, only: %i[show edit update destroy]
 
   # GET /months or /months.json
   def index
@@ -17,8 +17,7 @@ class MonthsController < ApplicationController
   end
 
   # GET /months/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /months or /months.json
   def create
@@ -26,7 +25,7 @@ class MonthsController < ApplicationController
 
     respond_to do |format|
       if @month.save
-        format.html { redirect_to months_path, notice: "Mes foi criado com sucesso" }
+        format.html { redirect_to months_path, notice: 'Mês foi criado com sucesso' }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -37,7 +36,7 @@ class MonthsController < ApplicationController
   def update
     respond_to do |format|
       if @month.update(month_params)
-        format.html { redirect_to months_path, notice: "Mes foi atualizado com sucesso" }
+        format.html { redirect_to months_path, notice: 'Mês foi atualizado com sucesso' }
         format.json { render :show, status: :ok, location: @month }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,18 +50,19 @@ class MonthsController < ApplicationController
     @month.destroy
 
     respond_to do |format|
-      format.html { redirect_to months_url, notice: "Mes foi excluido com sucesso" }
+      format.html { redirect_to months_url, notice: 'Mês foi excluido com sucesso' }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_month
-      @month = Month.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def month_params
-      params.require(:month).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_month
+    @month = Month.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def month_params
+    params.require(:month).permit(:name)
+  end
 end
