@@ -14,7 +14,8 @@ module Planerino
     config.load_defaults 7.0
     config.i18n.default_locale = :pt
 
-    config.hosts << "planerino-production.up.railway.app"
+    config.hosts << 'planerino-production.up.railway.app'
+    config.hosts << '127.0.0.1'
 
     # Configuration for the application, engines, and railties goes here.
     #
