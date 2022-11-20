@@ -3,7 +3,7 @@ class MonthsController < ApplicationController
 
   # GET /months or /months.json
   def index
-    @months = Month.all
+    @months = Month.all.sort { |a, b| sort_by_name(a, b) }
   end
 
   # GET /months/1 or /months/1.json
@@ -64,5 +64,11 @@ class MonthsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def month_params
     params.require(:month).permit(:name)
+  end
+
+  # @param first [Month]
+  # @param second [Month]
+  def sort_by_name(first, second)
+    Month::MONTH_NAMES[first.name.split[0]] <=> Month::MONTH_NAMES[second.name.split[0]]
   end
 end
