@@ -40,8 +40,6 @@ class Month < ApplicationRecord
     debits_per_owner
   end
 
-  private
-
   def debits_not_paid
     debits_not_paid = debit.map { |d| d unless d.paid }
 

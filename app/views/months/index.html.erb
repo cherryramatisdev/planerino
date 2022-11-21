@@ -10,7 +10,7 @@
       <div class="w-2/3 flex items-center justify-between">
         <%= link_to month_path(month), class: "w-full bg-gray-200 rounded-lg p-5 mb-2 flex items-center justify-center" do %>
           <div><%= month.name %></div>
-          <% unless month.debit.empty? %>
+          <% unless month.debits_not_paid.empty? %>
             <div>
               &nbsp;|
               Total: <%= number_to_currency(month.total, unit: 'R$ ') %>
