@@ -42,24 +42,13 @@ class DebitsController < ApplicationController
   # POST /debits or /debits.json
   def create
     price = debit_params[:price].gsub(',', '.')
-    if numeric?(debit_params[:owner_id])
-      @debit = Debit.new({
-                           title: debit_params[:title],
-                           price:,
-                           paid: debit_params[:paid],
-                           owner_id: debit_params[:owner_id],
-                           month_id: debit_params[:month_id]
-                         })
-    else
-      owner = Owner.find_or_create_by(name: debit_params[:owner_id])
-      @debit = Debit.new({
-                           title: debit_params[:title],
-                           price:,
-                           paid: debit_params[:paid],
-                           owner_id: owner.id,
-                           month_id: debit_params[:month_id]
-                         })
-    end
+    @debit = create_new_debit_with_owner(debit_params[:owner_id], {
+      title: debit_params[:title],
+      price:,
+      paid: debit_params[:paid],
+      owner_id: debit_params[:owner_id],
+      month_id: debit_params[:month_id]
+    })
 
     respond_to do |format|
       if @debit.save
@@ -111,5 +100,26 @@ class DebitsController < ApplicationController
     !Float(target).nil?
   rescue StandardError
     false
+  end
+
+  def create_new_debit_with_owner(owner, obj_params)
+    if numeric?(owner)
+      @debit = Debit.new({
+        title: obj_params[:title],
+        price: obj_params[:price],
+        paid: obj_params[:paid],
+        owner_id: obj_params[:owner_id],
+        month_id: obj_params[:month_id]
+      })
+    else
+      owner = Owner.find_or_create_by(name: obj_params[:owner_id].upcase)
+      @debit = Debit.new({
+        title: obj_params[:title],
+        price: obj_params[:price],
+        paid: obj_params[:paid],
+        owner_id: owner.id,
+        month_id: obj_params[:month_id]
+      })
+    end
   end
 end
