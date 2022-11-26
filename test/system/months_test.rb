@@ -8,7 +8,7 @@ class MonthsTest < ApplicationSystemTestCase
   test 'visiting the index' do
     visit months_url
     assert_selector 'a', text: 'Planerino'
-    assert_selector 'a', text: 'ADICIONAR UM NOVO MÊS'
+    assert_selector 'a', text: 'Adicionar um novo mês'
 
     months.each do |month|
       assert_selector 'a', text: month.name
@@ -30,6 +30,6 @@ class MonthsTest < ApplicationSystemTestCase
 
     click_on @month.name
 
-    assert_selector 'h1', text: "Débitos relacionados a #{@month.name}"
+    assert_selector 'h1', text: "Débitos referente ao mês #{@month.name.capitalize}"
   end
 end
