@@ -16,25 +16,13 @@ class DebitsController < ApplicationController
 
   # GET /update_paid
   def update_paid
-    if params[:update_by_debit_title].nil?
-      @updated = Debit.toggle_paid(params[:id])
-      respond_to do |format|
-        if @updated
-          format.html { redirect_to month_path(params[:month_id]) }
-        else
-          format.json { render json: @updated.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      # TODO: Make this toggle smartly?
-      debits_by_title = Debit.where(title: params[:update_by_debit_title])
-      @updated = debits_by_title.update_all(paid: !debits_by_title.first.paid)
-      respond_to do |format|
-        if @updated
-          format.html { redirect_to month_path(params[:month_id]) }
-        else
-          format.json { render json: @updated.errors, status: :unprocessable_entity }
-        end
+    @updated = Debit.toggle_paid(params[:id])
+    respond_to do |format|
+      if @updated
+        format.html { redirect_to month_path(params[:month_id]) }
+        format.json { render json: { debit_paid: Debit.find(params[:id]).paid }, status: :ok }
+      else
+        format.json { render json: @updated.errors, status: :unprocessable_entity }
       end
     end
   end

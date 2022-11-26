@@ -11,4 +11,11 @@ class Owner < ApplicationRecord
   def transform_name
     name.upcase!
   end
+
+  def get_initials
+    return name[0].upcase if name.split.length == 1
+
+    initials = name.split.map {|n| n[0].upcase }
+    return initials.join.upcase
+  end
 end

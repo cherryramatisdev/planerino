@@ -15,7 +15,7 @@ class DebitsTest < ApplicationSystemTestCase
   test 'creating a new debit' do
     visit_a_month @month
 
-    click_on 'Adicionar um novo debito'
+    click_on '+ Adicionar Transação'
     fill_in "Titulo", with: "Test debit"
     fill_in "Preço", with: "200,55"
     fill_in "Dono", with: "Owner 1"
