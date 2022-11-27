@@ -14,7 +14,19 @@ class DebitsController < ApplicationController
   # GET /debits/1/edit
   def edit; end
 
-  # GET /update_paid
+  # GET /get_debit_total?title=NUBANK
+  def get_total
+    @total = Debit.all.where(title: params[:title]).where(paid: false).sum { |e| e.price }
+    respond_to do |format|
+      if @total
+        format.json {render json: { total: @total }, status: :ok }
+      else
+        format.json { render json: {message: "Could not process total per owner"}, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # GET /update_paid/1
   def update_paid
     @updated = Debit.toggle_paid(params[:id])
     respond_to do |format|
