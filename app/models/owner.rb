@@ -8,6 +8,10 @@ class Owner < ApplicationRecord
     debit.group_by { |value| value[:title] }
   end
 
+  def debit_not_paid
+    debit.where(paid: false)
+  end
+
   def transform_name
     name.upcase!
   end
