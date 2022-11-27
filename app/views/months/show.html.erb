@@ -5,12 +5,8 @@
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
-    <div class="w-full flex flex-row items-center mb-10">
-      <div>
-        <h1 class="text-3xl mb-4">Débitos referente ao mês <%= @month.name.capitalize %></h1>
-        <%= link_to "+ Adicionar Transação", new_debit_path, class: "bg-blue-700 p-2 rounded-xl text-white" %>
-      </div>
-    </div>
+
+    <%= render 'layouts/header_title', title: "Débitos referente ao mês #{@month.name.capitalize}", button_text: "+ Adicionar Transação", path: new_debit_path %>
 
     <div class="w-full flex flex-wrap gap-20">
       <% @owners.each do |owner| %>
