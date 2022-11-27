@@ -1,19 +1,29 @@
 <div class="bg-blue-700 p-2 rounded-xl text-white" >
-  <a href="#" class="flex items-center gap-2 mb-2" data-controller="debit" data-debit-target="clickarea" data-action="click->debit#toggle">
-    <h2 id="debit_title">
-      <%= debit[0].capitalize %>
-    </h2>
+  <a href="#" class="flex items-center justify-between mb-2" data-controller="debit" data-debit-target="clickarea" data-action="click->debit#toggle">
+    <div class="flex items-center gap-2">
+      <h2 id="debit_title">
+        <%= debit[0].capitalize %>
+      </h2>
 
-    <svg data-debit-target="arrowicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="15" height="15">
-      <g id="Downv">
+      <svg data-debit-target="arrowicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" width="15" height="15">
+        <g id="Downv">
         <polygon points="12.5 18 2 7.707 2.707 7 12.5 16.586 22.293 7 23 7.707 12.5 18" style="fill:#FFF"/>
-      </g>
-    </svg>
+        </g>
+      </svg>
+    </div>
+
+    <h2>
+      <span class="text-gray-300">Total:</span> 
+
+      <span id="total_debit-<%= debit[0] %>">
+        <%= number_to_currency(debit[1].select {|e| !e.paid }.sum { |e| e.price }, { unit: 'R$ ' })  %>
+      </span>
+    </h2>
   </a>
 
   <div class="flex flex-col gap-2">
     <% debit[1].each do |d| %>
-      <a href="#" class="flex items-center justify-between bg-white w-full text-black rounded-xl px-2 py-1" data-controller="debit" data-debit-target="payable" data-info="<%= {id: d.id, month_id: month.id, update_paid_url: nil}.to_json %>" data-action="click->debit#pay">
+      <a href="#" class="flex items-center justify-between bg-white w-full text-black rounded-xl px-2 py-1" data-controller="debit" data-debit-target="payable" data-info="<%= {debit_title: d.title, id: d.id, month_id: month.id, update_paid_url: nil, owner_id: d.owner_id}.to_json %>" data-action="click->debit#pay">
         <span><%= number_to_currency(d.price, unit: 'R$ ')  %></span>
 
         <div class="w-24 <%= d.paid ? "bg-green-300" : "bg-yellow-300" %> text-center text-xs rounded-xl">
