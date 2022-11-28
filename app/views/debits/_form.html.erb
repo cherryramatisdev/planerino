@@ -36,7 +36,7 @@
     <%= form.text_field :owner_id, list: "debit_owner", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
     <datalist id="debit_owner">
       <% Owner.all.each do |owner| %>
-        <option value="<%= owner[:name] %>">
+        <option value="<%= owner[:name].capitalize %>">
       <% end %>
     </datalist>
   </div>
