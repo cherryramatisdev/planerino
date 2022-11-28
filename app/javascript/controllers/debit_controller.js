@@ -44,8 +44,8 @@ this.clickareaTarget.classList.add("mb-2")
     return siblings;
   }
 
-  async updateTotalDebitForOwner(owner_id) {
-    const response = await fetch(`/owner/get_debit_total/${owner_id}`, {
+  async updateTotalDebitForOwner(owner_id, month_id) {
+    const response = await fetch(`/owner/get_debit_total/${owner_id}?month_id=${month_id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -58,8 +58,8 @@ this.clickareaTarget.classList.add("mb-2")
     }
   }
 
-  async updateTotalForDebit(debit_title) {
-    const response = await fetch(`/debit/get_debit_total?title=${debit_title}`, {
+  async updateTotalForDebit(debit_title, month_id) {
+    const response = await fetch(`/debit/get_debit_total?title=${debit_title}&month_id=${month_id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -106,8 +106,8 @@ this.clickareaTarget.classList.add("mb-2")
     if (response.status === 200) {
       const { debit_paid } = await response.json()
 
-      await this.updateTotalDebitForOwner(body.owner_id)
-      await this.updateTotalForDebit(body.debit_title)
+      await this.updateTotalDebitForOwner(body.owner_id, body.month_id)
+      await this.updateTotalForDebit(body.debit_title, body.month_id)
 
       if (debit_paid) {
         this.payableTarget.childNodes[3].classList.remove("bg-yellow-300")

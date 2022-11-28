@@ -9,14 +9,15 @@ class DebitsController < ApplicationController
   # GET /debits/new
   def new
     @debit = Debit.new
+    @month_id = params[:month_id]
   end
 
   # GET /debits/1/edit
   def edit; end
 
-  # GET /get_debit_total?title=NUBANK
+  # GET /get_debit_total?title=NUBANK?month_id=1
   def get_total
-    @total = Debit.all.where(title: params[:title]).where(paid: false).sum { |e| e.price }
+    @total = Debit.all.where(title: params[:title]).where(month_id: params[:month_id], paid: false).sum { |e| e.price }
     respond_to do |format|
       if @total
         format.json {render json: { total: @total }, status: :ok }
@@ -103,23 +104,13 @@ class DebitsController < ApplicationController
   end
 
   def create_new_debit_with_owner(owner, obj_params)
-    if numeric?(owner)
-      @debit = Debit.new({
-        title: obj_params[:title],
-        price: obj_params[:price],
-        paid: obj_params[:paid],
-        owner_id: obj_params[:owner_id],
-        month_id: obj_params[:month_id]
-      })
-    else
-      owner = Owner.find_or_create_by(name: obj_params[:owner_id].upcase)
-      @debit = Debit.new({
-        title: obj_params[:title],
-        price: obj_params[:price],
-        paid: obj_params[:paid],
-        owner_id: owner.id,
-        month_id: obj_params[:month_id]
-      })
-    end
+    owner = Owner.find_or_create_by(name: obj_params[:owner_id].upcase)
+    @debit = Debit.new({
+      title: obj_params[:title],
+      price: obj_params[:price],
+      paid: obj_params[:paid],
+      owner_id: owner.id,
+      month_id: obj_params[:month_id]
+    })
   end
 end
