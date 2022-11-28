@@ -6,11 +6,11 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
-    <%= render 'layouts/header_title', title: "Débitos referente ao mês #{@month.name.capitalize}", button_text: "+ Adicionar Transação", path: new_debit_path %>
+    <%= render 'layouts/header_title', title: "Débitos referente ao mês #{@month.name.capitalize}", button_text: "+ Adicionar Transação", path: new_debit_path(month_id: @month.id) %>
 
     <div class="w-full flex flex-wrap gap-20">
       <% @owners.each do |owner| %>
-        <% unless owner.debit.empty? %>
+        <% unless owner.debit.where(month_id: @month.id).empty? %>
           <%= render 'months/owner', owner: owner, month: @month %>
         <% end %>
       <% end %>

@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-2">
     <%= render "layouts/card_header", initials: owner.get_initials, label: "Pagante:", title: owner.name.capitalize %>
 
-    <% owner.group_by_same_title.each do |debit| %>
+    <% owner.group_by_same_title(month.id).each do |debit| %>
       <%= render 'months/debit_per_owner', month: month, debit: debit %>
     <% end %>
   </div>
@@ -11,7 +11,7 @@
     <span class="text-gray-500 font-light uppercase">Total:</span> 
 
     <h3 id="total_owner-<%= owner.id %>" class="font-semibold">
-      <%= number_to_currency(owner.debit_not_paid.sum { |e| e.price }, unit: 'R$ ') %>
+      <%= number_to_currency(owner.debit_not_paid(month.id).sum { |e| e.price }, unit: 'R$ ') %>
     </h3>
   </div>
 <% end %>

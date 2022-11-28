@@ -8,7 +8,21 @@ class MonthsController < ApplicationController
 
   # GET /months/1 or /months/1.json
   def show
-    @owners = Owner.all
+    @db_owners = Owner.all
+
+    @owners = []
+
+    @db_owners.each do |owner|
+      debits_per_owner_and_month = Debit.all.where(month_id: params[:id], owner_id: owner.id)
+
+      if debits_per_owner_and_month.empty?
+        nil
+      else
+        @owners << owner
+      end
+    end
+
+    @owners
   end
 
   # GET /months/new

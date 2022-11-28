@@ -4,12 +4,12 @@ class Owner < ApplicationRecord
   validates :name, presence: { message: ' deve ser informado' }
   has_many :debit, dependent: :destroy
 
-  def group_by_same_title
-    debit.group_by { |value| value[:title] }
+  def group_by_same_title(month_id)
+    debit.where(month_id:).group_by { |value| value[:title] }
   end
 
-  def debit_not_paid
-    debit.where(paid: false)
+  def debit_not_paid(month_id)
+    debit.where(month_id:, paid: false)
   end
 
   def transform_name
