@@ -1,7 +1,19 @@
 <%= render 'layouts/header' %>
 
 <%= render 'layouts/container' do %>
-  <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class: "w-full flex flex-col items-center justify-center"} do |f| %>
+  <%= form_for resource, {
+    as: resource_name,
+    url: session_path(resource_name),
+    html: {class: "w-full flex flex-col items-center justify-center"}
+  } do |f| %>
+    <% if notice %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block"><%= notice %></p>
+    <% end %>
+
+    <% if alert %>
+      <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block"><%= alert %></p>
+    <% end %>
+
     <%= render 'layouts/card' do %>
       <div class="w-full flex flex-col p-2">
         <%= f.email_field :email, autofocus: true, placeholder: "Informe seu email", autocomplete: "email", class: "mb-2 block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
