@@ -3,7 +3,12 @@ class MonthsController < ApplicationController
 
   # GET /months or /months.json
   def index
-    @months = Month.all.sort { |a, b| sort_by_name(a, b) }
+    # Redirect to login if user is not logged in
+    if current_user.nil?
+      redirect_to new_user_session_path
+    else
+      @months = Month.all.where(user_id: current_user.id).sort { |a, b| sort_by_name(a, b) }
+    end
   end
 
   # GET /months/1 or /months/1.json

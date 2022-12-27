@@ -16,13 +16,13 @@ class DebitsController < ApplicationController
   def edit; end
 
   # GET /get_debit_total?title=NUBANK?month_id=1
-  def get_total
-    @total = Debit.all.where(title: params[:title]).where(month_id: params[:month_id], paid: false).sum { |e| e.price }
+  def total
+    @total = Debit.all.where(title: params[:title]).where(month_id: params[:month_id], paid: false).sum(&:price)
     respond_to do |format|
       if @total
-        format.json {render json: { total: @total }, status: :ok }
+        format.json { render json: { total: @total }, status: :ok }
       else
-        format.json { render json: {message: "Could not process total per owner"}, status: :unprocessable_entity }
+        format.json { render json: { message: 'Could not process total per owner' }, status: :unprocessable_entity }
       end
     end
   end
