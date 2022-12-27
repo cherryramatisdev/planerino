@@ -3,7 +3,12 @@ class MonthsController < ApplicationController
 
   # GET /months or /months.json
   def index
-    @months = Month.all.sort { |a, b| sort_by_name(a, b) }
+    # Redirect to login if user is not logged in
+    if current_user.nil?
+      redirect_to new_user_session_path
+    else
+      @months = Month.all.where(user_id: current_user.id).sort { |a, b| sort_by_name(a, b) }
+    end
   end
 
   # GET /months/1 or /months/1.json
@@ -35,13 +40,17 @@ class MonthsController < ApplicationController
 
   # POST /months or /months.json
   def create
-    @month = Month.new(month_params)
-
     respond_to do |format|
-      if @month.save
-        format.html { redirect_to months_path, notice: 'Mês foi criado com sucesso' }
+      if current_user.nil?
+        format.html { redirect_to new_user_session_path }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        @month = Month.new({}.merge(month_params, {user_id: current_user.id}))
+
+        if @month.save
+          format.html { redirect_to months_path, notice: 'Mês foi criado com sucesso' }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+        end
       end
     end
   end

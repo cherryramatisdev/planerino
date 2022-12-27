@@ -1,4 +1,13 @@
 pt:
+  devise:
+    sessions:
+      user:
+        signed_up: "Conta criada com sucesso."
+        signed_out: "Deslogado com sucesso."
+        signed_in: "Logado com sucesso."
+    failure:
+      user:
+        not_found_in_database: "Usuário não encontrado"
   activerecord:
     errors:
       models:
