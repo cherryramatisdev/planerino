@@ -13,7 +13,7 @@
     </div>
 
     <h2>
-      <span class="text-gray-300">Total:</span> 
+      <span class="text-gray-300">Total:</span>
 
       <span id="total_debit-<%= debit[0] %>">
         <%= number_to_currency(debit[1].select {|e| !e.paid }.sum { |e| e.price }, { unit: 'R$ ' })  %>
@@ -23,13 +23,26 @@
 
   <div class="flex flex-col gap-2">
     <% debit[1].each do |d| %>
-      <a href="#" class="flex items-center justify-between bg-white w-full text-black rounded-xl px-2 py-1" data-controller="debit" data-debit-target="payable" data-info="<%= {debit_title: d.title, id: d.id, month_id: month.id, update_paid_url: nil, owner_id: d.owner_id}.to_json %>" data-action="click->debit#pay">
-        <span><%= number_to_currency(d.price, unit: 'R$ ')  %></span>
+      <div class="flex flex-row">
+        <a href="#" class="flex flex-row items-center justify-between bg-white w-full text-black rounded-xl px-2 py-1" data-controller="debit" data-debit-target="payable" data-info="<%= {debit_title: d.title, id: d.id, month_id: month.id, update_paid_url: nil, owner_id: d.owner_id}.to_json %>" data-action="click->debit#pay">
+          <span><%= number_to_currency(d.price, unit: 'R$ ')  %></span>
 
-        <div class="w-24 <%= d.paid ? "bg-green-300" : "bg-yellow-300" %> text-center text-xs rounded-xl">
-          <%= d.paid ? 'Pago' : 'Pendente' %>
-        </div>
-      </a>
+          <div class="w-24 <%= d.paid ? "bg-green-300" : "bg-yellow-300" %> text-center text-xs rounded-xl">
+            <%= d.paid ? 'Pago' : 'Pendente' %>
+          </div>
+        </a>
+
+        <%= link_to debit_path(d), data: { "turbo-method": :delete } do %>
+          <svg width="30" height="30" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M6 7C6.55228 7 7 7.44772 7 8V19C7 19.5523 7.44772 20 8 20H16C16.5523 20 17 19.5523 17 19V8C17 7.44772 17.4477 7 18 7C18.5523 7 19 7.44772 19 8V19C19 20.6569 17.6569 22 16 22H8C6.34315 22 5 20.6569 5 19V8C5 7.44772 5.44772 7 6 7Z" fill="red"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10 8C10.5523 8 11 8.44772 11 9V17C11 17.5523 10.5523 18 10 18C9.44772 18 9 17.5523 9 17V9C9 8.44772 9.44772 8 10 8Z" fill="red"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M14 8C14.5523 8 15 8.44772 15 9V17C15 17.5523 14.5523 18 14 18C13.4477 18 13 17.5523 13 17V9C13 8.44772 13.4477 8 14 8Z" fill="red"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M4 5C4 4.44772 4.44772 4 5 4H19C19.5523 4 20 4.44772 20 5C20 5.55228 19.5523 6 19 6H5C4.44772 6 4 5.55228 4 5Z" fill="red"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M8 3C8 2.44772 8.44772 2 9 2H15C15.5523 2 16 2.44772 16 3C16 3.55228 15.5523 4 15 4H9C8.44772 4 8 3.55228 8 3Z" fill="red"/>
+          </svg>
+        <% end %>
+
+      </div>
     <% end %>
   </div>
 </div>
