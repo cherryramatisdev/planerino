@@ -19,7 +19,7 @@ pt:
       month:
         name: "Nome"
       owners:
-        name: "Dono"
+        name: "Pagante"
       debit:
         title: "Titulo"
         price: "Preço"
