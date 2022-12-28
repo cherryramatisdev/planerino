@@ -24,4 +24,5 @@ pt:
         title: "Titulo"
         price: "Preço"
         paid: "Pago"
-        owner: "Dono"
+        owner: "Pagante"
+        owner_id: "Pagante"

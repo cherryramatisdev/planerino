@@ -30,9 +30,9 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :month_id %>
+    <%= form.label :mês_id %>
     <% if Month.all.empty? %>
-      <%= form.text_field :month_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= form.text_field :mês_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
     <% else %>
       <%= form.select :month_id, Month.all.order(Arel.sql("id = #{month_id} DESC")).collect { |o| [ o.name, o.id ] }, {}, {include_blank: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"} %>
     <% end %>
