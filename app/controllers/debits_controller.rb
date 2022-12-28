@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DebitsController < ApplicationController
   before_action :set_debit, only: %i[show edit update destroy]
 
@@ -43,7 +45,7 @@ class DebitsController < ApplicationController
   # POST /debits or /debits.json
   def create
     price = debit_params[:price].gsub(',', '.')
-    @debit = create_new_debit_with_owner(debit_params[:owner_id], {
+    @debit = create_new_debit_with_owner({
                                            title: debit_params[:title],
                                            price:,
                                            paid: debit_params[:paid],
@@ -103,13 +105,13 @@ class DebitsController < ApplicationController
     false
   end
 
-  def create_new_debit_with_owner(owner, obj_params)
-    owner = Owner.find_or_create_by(name: obj_params[:owner_id].upcase)
+  def create_new_debit_with_owner(obj_params)
+    created_owner = Owner.find_or_create_by(name: obj_params[:owner_id].upcase)
     @debit = Debit.new({
                          title: obj_params[:title],
                          price: obj_params[:price],
                          paid: obj_params[:paid],
-                         owner_id: owner.id,
+                         owner_id: created_owner.id,
                          month_id: obj_params[:month_id]
                        })
   end
