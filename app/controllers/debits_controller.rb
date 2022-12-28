@@ -44,12 +44,12 @@ class DebitsController < ApplicationController
   def create
     price = debit_params[:price].gsub(',', '.')
     @debit = create_new_debit_with_owner(debit_params[:owner_id], {
-      title: debit_params[:title],
-      price:,
-      paid: debit_params[:paid],
-      owner_id: debit_params[:owner_id],
-      month_id: debit_params[:month_id]
-    })
+                                           title: debit_params[:title],
+                                           price:,
+                                           paid: debit_params[:paid],
+                                           owner_id: debit_params[:owner_id],
+                                           month_id: debit_params[:month_id]
+                                         })
 
     respond_to do |format|
       if @debit.save
@@ -80,7 +80,6 @@ class DebitsController < ApplicationController
     @debit.destroy
 
     respond_to do |format|
-      format.html { redirect_to debits_url, notice: 'Debito foi excluido com sucesso' }
       format.json { head :no_content }
     end
   end
@@ -106,11 +105,11 @@ class DebitsController < ApplicationController
   def create_new_debit_with_owner(owner, obj_params)
     owner = Owner.find_or_create_by(name: obj_params[:owner_id].upcase)
     @debit = Debit.new({
-      title: obj_params[:title],
-      price: obj_params[:price],
-      paid: obj_params[:paid],
-      owner_id: owner.id,
-      month_id: obj_params[:month_id]
-    })
+                         title: obj_params[:title],
+                         price: obj_params[:price],
+                         paid: obj_params[:paid],
+                         owner_id: owner.id,
+                         month_id: obj_params[:month_id]
+                       })
   end
 end
