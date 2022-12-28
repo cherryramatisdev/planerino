@@ -14,14 +14,15 @@ pt:
         debit:
           attributes:
             owner:
-              required: "é preciso informar o nome do dono para o debito em questão"
+              required: "precisa ser informado para o debito em questão"
     attributes:
       month:
         name: "Nome"
-      owner:
-        name: "Dono"
+      owners:
+        name: "Pagante"
       debit:
         title: "Titulo"
         price: "Preço"
         paid: "Pago"
+        owner: "Pagante"
         owner_id: "Pagante"

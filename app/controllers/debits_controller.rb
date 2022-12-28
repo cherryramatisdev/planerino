@@ -44,7 +44,7 @@ class DebitsController < ApplicationController
 
   # POST /debits or /debits.json
   def create
-    price = debit_params[:price].gsub(',', '.')
+    price = debit_params[:price].empty? ? '0' : debit_params[:price].gsub(',', '.') || '0'
     @debit = create_new_debit_with_owner({
                                            title: debit_params[:title],
                                            price:,
@@ -58,7 +58,9 @@ class DebitsController < ApplicationController
         format.html { redirect_to month_url(debit_params[:month_id]), notice: 'Debito foi adicionado com sucesso.' }
         format.json { render :show, status: :created, location: @debit }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html do
+          redirect_to new_debit_path(month_id: debit_params[:month_id]), notice: @debit.errors.full_messages.join(',')
+        end
         format.json { render json: @debit.errors, status: :unprocessable_entity }
       end
     end
