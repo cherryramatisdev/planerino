@@ -75,11 +75,12 @@ class DebitsController < ApplicationController
     end
   end
 
-  # DELETE /debits/1 or /debits/1.json
+  # DELETE /debits/1?month_id=1 or /debits/1.json?month_id=1
   def destroy
     @debit.destroy
 
     respond_to do |format|
+      format.html { redirect_to month_url(params[:month_id]), notice: 'Debito foi excluido com sucesso.' }
       format.json { head :no_content }
     end
   end
