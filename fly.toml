@@ -1,4 +1,4 @@
-# fly.toml file generated for planerino on 2022-11-25T18:12:25-03:00
+# fly.toml file generated for planerino on 2022-12-27T12:41:09-03:00
 
 app = "planerino"
 kill_signal = "SIGINT"
