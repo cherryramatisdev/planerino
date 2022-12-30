@@ -15,7 +15,9 @@ class DebitsController < ApplicationController
   end
 
   # GET /debits/1/edit
-  def edit; end
+  def edit
+    @month_id = params[:month_id]
+  end
 
   # GET /get_debit_total?title=NUBANK?month_id=1
   def total
@@ -70,10 +72,13 @@ class DebitsController < ApplicationController
   def update
     respond_to do |format|
       if @debit.update(debit_params)
-        format.html { redirect_to debit_url(@debit), notice: 'Debito foi atualizado com sucesso' }
+        format.html { redirect_to month_url(debit_params[:month_id]), notice: 'Debito foi atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @debit }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html do
+          redirect_to debit_path(@debit, month_id: debit_params[:month_id]),
+                      notice: @debit.errors.full_messages.join(',')
+        end
         format.json { render json: @debit.errors, status: :unprocessable_entity }
       end
     end

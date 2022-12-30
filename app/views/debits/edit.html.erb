@@ -1,10 +1,16 @@
 <%= render 'layouts/header' %>
 
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing debit</h1>
+<%= render 'layouts/container' do %>
+  <h1 class="font-bold text-4xl">Atualizando um debito</h1>
 
-  <%= render "form", debit: @debit %>
+  <% if notice.present? %>
+    <% notice.split(',').each do |n| %>
+      <div>
+        <p class="py-2 px-3 bg-red-50 mt-2 mb-2 text-red-500 font-medium rounded-lg inline  -block" id=  "notice"><%= n %></p>
+      </div>
+    <% end %>
+  <% end %>
 
-  <%= link_to "Show this debit", @debit, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-  <%= link_to "Back to debits", debits_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-</div>
+  <%= render "form", debit: @debit, month_id: @month_id, button_text: 'Atualizar o debito' %>
+  <%= link_to "Voltar", month_path(@month_id), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"  %>
+<% end %>
