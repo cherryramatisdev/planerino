@@ -46,7 +46,13 @@ class DebitsController < ApplicationController
 
   # POST /debits or /debits.json
   def create
-    price = debit_params[:price].empty? ? '0' : debit_params[:price].gsub(',', '.') || '0'
+    price = sanitize_price(debit_params[:price])
+
+    unless numeric?(price)
+      return redirect_to new_debit_path(month_id: debit_params[:month_id]),
+                         notice: 'Preço deve conter apenas números e ponto ou virgula como separação'
+    end
+
     @debit = create_new_debit_with_owner({
                                            title: debit_params[:title],
                                            price:,
@@ -70,8 +76,21 @@ class DebitsController < ApplicationController
 
   # PATCH/PUT /debits/1 or /debits/1.json
   def update
+    price = sanitize_price(debit_params[:price])
+
+    unless numeric?(price)
+      return redirect_to debit_path(@debit, month_id: debit_params[:month_id]),
+                         notice: 'Preço deve conter apenas números e ponto ou virgula como separação'
+    end
+
     respond_to do |format|
-      if @debit.update(debit_params)
+      if @debit.update({
+                         title: debit_params[:title],
+                         price:,
+                         paid: debit_params[:paid],
+                         owner_id: debit_params[:owner_id],
+                         month_id: debit_params[:month_id]
+                       })
         format.html { redirect_to month_url(debit_params[:month_id]), notice: 'Debito foi atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @debit }
       else
@@ -107,7 +126,7 @@ class DebitsController < ApplicationController
   end
 
   def numeric?(target)
-    !Float(target).nil?
+    return true if Float(target)
   rescue StandardError
     false
   end
@@ -121,5 +140,13 @@ class DebitsController < ApplicationController
                          owner_id: created_owner.id,
                          month_id: obj_params[:month_id]
                        })
+  end
+
+  def sanitize_price(price)
+    if price.empty?
+      '0'
+    else
+      price.gsub('.', '').gsub(',', '.')
+    end
   end
 end

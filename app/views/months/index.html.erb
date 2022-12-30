@@ -28,7 +28,7 @@
                     <span class="text-lg text-gray-400">
                       Total do pagante <%= d[:owner].capitalize %>:
                     </span>
-                    <%= number_to_currency(d[:total], unit: 'R$ ') %>
+                    <%= number_to_brl(d[:total]) %>
                   </h2>
                 <% end %>
               <% end %>

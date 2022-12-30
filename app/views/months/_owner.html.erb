@@ -11,7 +11,7 @@
     <span class="text-gray-500 font-light uppercase">Total:</span>
 
     <h3 id="total_owner-<%= owner.id %>" class="font-semibold">
-      <%= number_to_currency(owner.debit_not_paid(month.id).sum { |e| e.price }, unit: 'R$ ') %>
+      <%= number_to_brl(owner.debit_not_paid(month.id).sum { |e| e.price }) %>
     </h3>
   </div>
 <% end %>
