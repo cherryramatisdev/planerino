@@ -11,9 +11,8 @@
 
   <div class="my-5">
     <%= form.label :price %>
-    <%= form.text_field :price, pattern: "[0-9]+([\.,][0-9]+)?", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    <%= form.text_field :price, value: number_to_string_with_delimiter(form.object.price), class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
-
   <div class="my-5">
     <%= form.label :paid %>
     <%= form.check_box :paid, class: "block mt-2 h-5 w-5" %>
@@ -39,6 +38,6 @@
   </div>
 
   <div class="inline">
-    <%= form.submit "Criar um novo debito", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= form.submit button_text ||= "Criar um novo debito", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>
