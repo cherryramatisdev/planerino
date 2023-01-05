@@ -1,3 +1,5 @@
+# typed: true
+
 class Owner < ApplicationRecord
   before_save :transform_name
 
@@ -13,13 +15,16 @@ class Owner < ApplicationRecord
   end
 
   def transform_name
-    name.upcase!
+    return '' if name.nil?
+
+    T.must(name).upcase!
   end
 
   def initials
-    return name[0].upcase if name.split.length == 1
+    return '' if name.nil?
+    return T.must(T.must(name)[0]).upcase if T.must(name).split.length == 1
 
-    initials = name.split.map { |n| n[0].upcase }
+    initials = T.must(name).split.map { |n| T.must(n[0]).upcase }
 
     initials.join.upcase
   end
