@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 class DebitsController < ApplicationController
@@ -33,13 +34,13 @@ class DebitsController < ApplicationController
 
   # GET /update_paid/1
   def update_paid
-    @updated = Debit.toggle_paid(params[:id])
+    @updated = Debit.toggle_paid(params[:id].to_s.to_i)
     respond_to do |format|
-      if @updated
+      if @updated.errors
+        format.json { render json: @updated.errors, status: :unprocessable_entity }
+      else
         format.html { redirect_to month_path(params[:month_id]) }
         format.json { render json: { debit_paid: Debit.find(params[:id]).paid }, status: :ok }
-      else
-        format.json { render json: @updated.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -122,7 +123,8 @@ class DebitsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def debit_params
-    params.require(:debit).permit(:id, :title, :price, :paid, :owner_id, :month_id)
+    T.cast(params.require(:debit), ActionController::Parameters).permit(:id, :title, :price, :paid, :owner_id,
+                                                                        :month_id)
   end
 
   def numeric?(target)
