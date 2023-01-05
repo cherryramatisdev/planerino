@@ -82,3 +82,5 @@ gem 'rubocop', '~> 1.38'
 gem 'tailwindcss-rails', '~> 2.0'
 
 gem 'devise', '~> 4.8'
+
+gem "dalli", "~> 3.2"
