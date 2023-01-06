@@ -19,6 +19,7 @@ class Month < ApplicationRecord
   validates :name, presence: { message: ' deve ser informado' }
 
   belongs_to :user
+  belongs_to :year
   has_many :debit, dependent: :destroy
 
   def transform_name

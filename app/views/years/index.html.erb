@@ -1,0 +1,33 @@
+<%= render 'layouts/header' %>
+
+<%= render 'layouts/container' do %>
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <%= render 'layouts/header_title', title: "Listagem de anos", button_text: "Adicionar um novo ano", path: new_year_path %>
+
+  <% unless @years.empty? %>
+    <div class="w-full flex flex-wrap">
+      <% @years.each do |year| %>
+        <%= link_to year_path(year) do %>
+          <div class="h-full mb-10 ml-10">
+            <%= render 'layouts/card' do %>
+              <%= render "layouts/card_header", initials: year.name, label: "Ano: ", title: year.name, text_size: 'text-3xl' %>
+
+              <div class="flex items-start justify-start">
+                <%= link_to year_path(year), data: { "turbo-method": :delete }, class: "mr-5" do %>
+                  <%= render 'layouts/delete_icon', color: 'black' %>
+                <% end %>
+
+                <%= link_to edit_year_path(year) do %>
+                  <%= render 'layouts/edit_icon', color: 'black' %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

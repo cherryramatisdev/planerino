@@ -1,0 +1,9 @@
+<%= form_with(model: year, class: "contents") do |form| %>
+  <div class="my-5">
+    <%= form.text_field :name, type: :year, placeholder: "Informe o ano", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit submit_button, class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

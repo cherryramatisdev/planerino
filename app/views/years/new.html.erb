@@ -1,0 +1,9 @@
+<%= render 'layouts/header' %>
+
+<%= render 'layouts/container' do %>
+  <h1 class="font-bold text-4xl">Novo mes</h1>
+
+  <%= render "form", year: @year, submit_button: "Criar ano" %>
+
+  <%= link_to 'Voltar', years_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+<% end %>
