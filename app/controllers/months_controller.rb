@@ -1,14 +1,12 @@
+# typed: true
+
 class MonthsController < ApplicationController
   before_action :set_month, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   # GET /months or /months.json
   def index
-    # Redirect to login if user is not logged in
-    if current_user.nil?
-      redirect_to new_user_session_path
-    else
-      @months = Month.all.where(user_id: current_user.id).sort { |a, b| sort_by_name(a, b) }
-    end
+    @months = Month.all.where(user_id: T.must(current_user).id).sort { |a, b| sort_by_name(a, b) }
   end
 
   # GET /months/1 or /months/1.json
@@ -41,16 +39,12 @@ class MonthsController < ApplicationController
   # POST /months or /months.json
   def create
     respond_to do |format|
-      if current_user.nil?
-        format.html { redirect_to new_user_session_path }
-      else
-        @month = Month.new({}.merge(month_params, {user_id: current_user.id}))
+      @month = Month.new({}.merge(month_params, { user_id: T.must(current_user).id }))
 
-        if @month.save
-          format.html { redirect_to months_path, notice: 'Mês foi criado com sucesso' }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-        end
+      if @month.save
+        format.html { redirect_to months_path, notice: 'Mês foi criado com sucesso' }
+      else
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -86,7 +80,7 @@ class MonthsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def month_params
-    params.require(:month).permit(:name)
+    T.cast(params.require(:month), ActionController::Parameters).permit(:name)
   end
 
   # @param first [Month]
