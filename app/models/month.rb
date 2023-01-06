@@ -1,3 +1,5 @@
+# typed: true
+
 class Month < ApplicationRecord
   before_save :transform_name
 
@@ -23,7 +25,9 @@ class Month < ApplicationRecord
   has_many :debit, dependent: :destroy
 
   def transform_name
-    name.upcase!
+    return '' if name.nil?
+
+    T.must(name).upcase!
   end
 
   def total
