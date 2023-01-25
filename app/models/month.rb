@@ -3,21 +3,21 @@
 class Month < ApplicationRecord
   before_save :transform_name
 
-  MONTH_NAMES = {
-    'JANEIRO' => 0,
-    'FEVEREIRO' => 1,
-    'MARÇO' => 2,
-    'MARCO' => 2,
-    'ABRIL' => 3,
-    'MAIO' => 4,
-    'JUNHO' => 5,
-    'JULHO' => 6,
-    'AGOSTO' => 7,
-    'SETEMBRO' => 8,
-    'OUTUBRO' => 9,
-    'NOVEMBRO' => 10,
-    'DEZEMBRO' => 11
-  }
+  MONTH_NAMES = T.let({
+                        'JANEIRO' => 0,
+                        'FEVEREIRO' => 1,
+                        'MARÇO' => 2,
+                        'MARCO' => 2,
+                        'ABRIL' => 3,
+                        'MAIO' => 4,
+                        'JUNHO' => 5,
+                        'JULHO' => 6,
+                        'AGOSTO' => 7,
+                        'SETEMBRO' => 8,
+                        'OUTUBRO' => 9,
+                        'NOVEMBRO' => 10,
+                        'DEZEMBRO' => 11
+                      }, T::Hash[String, Integer])
   validates :name, presence: { message: ' deve ser informado' }
 
   belongs_to :user

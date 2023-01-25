@@ -34,7 +34,9 @@ class MonthsController < ApplicationController
   end
 
   # GET /months/1/edit
-  def edit; end
+  def edit
+    @year_id = params[:year_id]
+  end
 
   # POST /months or /months.json
   def create
@@ -53,7 +55,7 @@ class MonthsController < ApplicationController
   def update
     respond_to do |format|
       if @month.update(month_params)
-        format.html { redirect_to months_path, notice: 'Mês foi atualizado com sucesso' }
+        format.html { redirect_to year_path(params[:year_id]), notice: 'Mês foi atualizado com sucesso' }
         format.json { render :show, status: :ok, location: @month }
       else
         format.html { render :edit, status: :unprocessable_entity }

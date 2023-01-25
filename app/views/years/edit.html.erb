@@ -1,0 +1,7 @@
+<%= render 'layouts/header' %>
+
+<%= render 'layouts/container' do %>
+  <h1 class="font-bold text-4xl">Atualizando o ano</h1>
+
+  <%= render "form", year: @year, submit_button: "Atualizar ano" %>
+<% end %>
