@@ -94,6 +94,7 @@ this.clickareaTarget.classList.add("mb-2")
     event.preventDefault()
 
     const body = JSON.parse(this.payableTarget.dataset.info)
+
     const url = `/debits/update_paid/${body.id}?month_id=${body.month_id}&id=${body.id}`
 
     const response = await fetch(url, {

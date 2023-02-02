@@ -35,11 +35,11 @@ class DebitsController < ApplicationController
   def update_paid
     @updated = Debit.toggle_paid(params[:id].to_s.to_i)
     respond_to do |format|
-      if @updated.errors
-        format.json { render json: @updated.errors, status: :unprocessable_entity }
-      else
+      if @updated.errors.empty?
         format.html { redirect_to month_path(params[:month_id]) }
         format.json { render json: { debit_paid: Debit.find(params[:id]).paid }, status: :ok }
+      else
+        format.json { render json: @updated.errors, status: :unprocessable_entity }
       end
     end
   end
