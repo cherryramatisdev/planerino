@@ -4,7 +4,7 @@ class YearsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @years = Year.all.where(user_id: T.must(current_user).id)
+    @years = Year.all.where(user_id: current_user.id)
   end
 
   def new
@@ -40,7 +40,7 @@ class YearsController < ApplicationController
 
   def create
     respond_to do |format|
-      @year = Year.new({}.merge(year_params, { user_id: T.must(current_user).id }))
+      @year = Year.new({}.merge(year_params, { user_id: current_user.id }))
 
       create_months_by_year(@year)
 
@@ -56,12 +56,12 @@ class YearsController < ApplicationController
 
   def create_months_by_year(year)
     Month::MONTH_NAMES.each_key do |month|
-      year.month.build(name: month, user_id: T.must(current_user).id).save
+      year.month.build(name: month, user_id: current_user.id).save
     end
   end
 
   # Only allow a list of trusted parameters through.
   def year_params
-    T.cast(params.require(:year), ActionController::Parameters).permit(:name)
+    params.require(:year).permit(:name)
   end
 end

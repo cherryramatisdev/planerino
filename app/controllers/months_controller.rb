@@ -6,7 +6,7 @@ class MonthsController < ApplicationController
 
   # GET /months or /months.json
   def index
-    @months = Month.all.where(user_id: T.must(current_user).id).sort { |a, b| sort_by_name(a, b) }
+    @months = Month.all.where(user_id: current_user.id).sort { |a, b| sort_by_name(a, b) }
   end
 
   # GET /months/1 or /months/1.json
@@ -41,7 +41,7 @@ class MonthsController < ApplicationController
   # POST /months or /months.json
   def create
     respond_to do |format|
-      @month = Month.new({}.merge(month_params, { user_id: T.must(current_user).id }))
+      @month = Month.new({}.merge(month_params, { user_id: current_user.id }))
 
       if @month.save
         format.html { redirect_to months_path, notice: 'Mês foi criado com sucesso' }
@@ -82,7 +82,7 @@ class MonthsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def month_params
-    T.cast(params.require(:month), ActionController::Parameters).permit(:name)
+    params.require(:month).permit(:name)
   end
 
   # @param first [Month]

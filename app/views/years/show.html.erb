@@ -5,7 +5,7 @@
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-  <%= render 'layouts/header_title', title: "Listagem do ano #{@year.name}", button_text: "Adicionar um novo mês", path: new_month_path %>
+  <%= render 'layouts/header_title', title: "Listagem do ano #{@year.name}", path: new_month_path %>
 
   <% unless @months.empty? %>
     <div class="w-full flex flex-wrap">

@@ -44,8 +44,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-gem 'sorbet-runtime'
-
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -60,9 +58,6 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
-
-  gem 'sorbet'
-  gem 'tapioca', require: false
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -83,4 +78,7 @@ gem 'tailwindcss-rails', '~> 2.0'
 
 gem 'devise', '~> 4.8'
 
-gem "dalli", "~> 3.2"
+gem 'dalli', '~> 3.2'
+
+gem 'solargraph', '~> 0.48.0'
+gem 'solargraph-rails', '~> 1.1'

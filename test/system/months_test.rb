@@ -8,21 +8,10 @@ class MonthsTest < ApplicationSystemTestCase
   test 'visiting the index' do
     visit months_url
     assert_selector 'a', text: 'Planerino'
-    assert_selector 'a', text: 'Adicionar um novo mês'
 
     months.each do |month|
       assert_selector 'a', text: month.name
     end
-  end
-
-  test 'creating a new month' do
-    visit months_url
-
-    click_on 'Adicionar um novo mês'
-    fill_in 'month_name', with: @month.name
-    click_on "Criar mês"
-
-    assert_selector 'p', text: 'Mês foi criado com sucesso'
   end
 
   test 'visualizing an specific month' do

@@ -2,6 +2,8 @@
   <div>
     <h1 class="text-3xl mb-4"><%= title %></h1>
 
-    <%= link_to button_text, path, class: "bg-blue-700 px-4 py-2 rounded-xl text-white" %>
+    <% if defined?(button_text) %>
+      <%= link_to button_text, path, class: "bg-blue-700 px-4 py-2 rounded-xl text-white" %>
+    <% end %>
   </div>
 </div>
