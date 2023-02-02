@@ -1,5 +1,5 @@
 <nav class="w-full flex px-12 py-6 bg-white fixed top-0 left-0 drop-shadow-md z-50 justify-between items-center">
-  <%= link_to "Planerino", years_path, class: "text-2xl text-blue-700 font-medium" %>
+  <%= link_to "Planerino", path ||= years_path, class: "text-2xl text-blue-700 font-medium" %>
 
   <% if current_user %>
     <div class="flex items-center gap-5 font-medium text-lg">
