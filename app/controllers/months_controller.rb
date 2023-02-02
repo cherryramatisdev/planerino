@@ -5,9 +5,7 @@ class MonthsController < ApplicationController
   before_action :authenticate_user!
 
   # GET /months or /months.json
-  def index
-    @months = Month.all.where(user_id: current_user.id).sort { |a, b| sort_by_name(a, b) }
-  end
+  def index; end
 
   # GET /months/1 or /months/1.json
   def show
@@ -83,14 +81,5 @@ class MonthsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def month_params
     params.require(:month).permit(:name)
-  end
-
-  # @param first [Month]
-  # @param second [Month]
-  def sort_by_name(first, second)
-    regexp = /,|-|./
-    first_name = first.name.gsub(regexp, '')
-    second_name = second.name.gsub(regexp, '')
-    Month::MONTH_NAMES[first_name.split[0]] <=> Month::MONTH_NAMES[second_name.split[0]]
   end
 end

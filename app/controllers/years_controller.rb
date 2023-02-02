@@ -13,7 +13,9 @@ class YearsController < ApplicationController
 
   def show
     @year = Year.find(params[:id])
-    @months = Month.all.where(year_id: params[:id], user_id: current_user.id).sort { |a, b| sort_by_name(a, b) }
+    @months = Month.all.where(year_id: params[:id], user_id: current_user.id).sort do |a, b|
+      MonthsHelper.sort_by_name(a, b)
+    end
   end
 
   def edit; end
