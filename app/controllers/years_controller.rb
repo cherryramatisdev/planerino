@@ -1,4 +1,4 @@
-# typed: true
+# frozen_string_literal: true
 
 class YearsController < ApplicationController
   before_action :authenticate_user!
@@ -42,7 +42,7 @@ class YearsController < ApplicationController
     respond_to do |format|
       @year = Year.new({}.merge(year_params, { user_id: T.must(current_user).id }))
 
-      Month::MONTH_NAMES.keys.each do |month|
+      Month::MONTH_NAMES.each_key do |month|
         @year.month.build(name: month, user_id: T.must(current_user).id).save
       end
 
