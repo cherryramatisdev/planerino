@@ -12,6 +12,7 @@ pt:
       user:
         unauthenticated: "Usuário precisa estar logado"
         not_found_in_database: "Usuário não encontrado"
+        invalid: "Email ou senha estão incorretos"
   activerecord:
     errors:
       models:

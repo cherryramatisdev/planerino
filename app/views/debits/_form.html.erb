@@ -18,24 +18,24 @@
     <%= form.check_box :paid, class: "block mt-2 h-5 w-5" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :owner_id %>
-    <%= form.text_field :owner_id, list: "debit_owner", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-    <datalist id="debit_owner">
-      <% Owner.all.each do |owner| %>
-        <option value="<%= owner[:name].capitalize %>">
-      <% end %>
-    </datalist>
-  </div>
+  <div class="my-5 <%= hide_owner_and_month ? 'hidden' : 'block' %>">
+      <%= form.label :owner_id %>
+      <%= form.text_field :owner_id, list: "debit_owner", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <datalist id="debit_owner">
+        <% Owner.all.each do |owner| %>
+          <option value="<%= owner[:name].capitalize %>">
+        <% end %>
+      </datalist>
+    </div>
 
-  <div class="my-5">
-    <%= form.label :mês_id %>
-    <% if Month.all.empty? %>
-      <%= form.text_field :mês_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-    <% else %>
-      <%= form.select :month_id, Month.all.order(Arel.sql("id = #{month_id} DESC")).collect { |o| [ o.name, o.id ] }, {}, {include_blank: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"} %>
-    <% end %>
-  </div>
+    <div class="my-5 <%= hide_owner_and_month ? 'hidden' : 'block' %>">
+      <%= form.label :mês_id %>
+      <% if Month.all.empty? %>
+        <%= form.text_field :mês_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <% else %>
+        <%= form.select :month_id, Month.all.order(Arel.sql("id = #{month_id} DESC")).collect { |o| [ o.name, o.id ] }, {}, {include_blank: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"} %>
+      <% end %>
+    </div>
 
   <div class="inline">
     <%= form.submit button_text ||= "Criar um novo debito", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
