@@ -6,7 +6,7 @@ class Debit < ApplicationRecord
   validates :title, presence: { message: ' deve ser informado' }
   validates :price, presence: { message: ' deve ser informado' }
 
-  default_scope { order('created_at DESC') }
+  default_scope { order('title ASC') }
 
   belongs_to :owner
   belongs_to :month
