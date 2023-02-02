@@ -42,9 +42,7 @@ class YearsController < ApplicationController
     respond_to do |format|
       @year = Year.new({}.merge(year_params, { user_id: T.must(current_user).id }))
 
-      Month::MONTH_NAMES.each_key do |month|
-        @year.month.build(name: month, user_id: T.must(current_user).id).save
-      end
+      create_months_by_year(@year)
 
       if @year.save
         format.html { redirect_to year_path(@year.id), notice: 'Ano foi criado com sucesso' }
@@ -55,6 +53,12 @@ class YearsController < ApplicationController
   end
 
   private
+
+  def create_months_by_year(year)
+    Month::MONTH_NAMES.each_key do |month|
+      year.month.build(name: month, user_id: T.must(current_user).id).save
+    end
+  end
 
   # Only allow a list of trusted parameters through.
   def year_params

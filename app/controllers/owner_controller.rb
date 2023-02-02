@@ -1,9 +1,9 @@
-# typed: true
+# frozen_string_literal: true
 
 class OwnerController < ApplicationController
   # GET /get_debit_total/1?month_id=1
-  def get_total
-    @total = Owner.find(params[:id]).debit.where(month_id: params[:month_id], paid: false).sum { |e| e.price }
+  def total
+    @total = Owner.find(params[:id]).debit.where(month_id: params[:month_id], paid: false).sum(&:price)
     respond_to do |format|
       if @total
         format.json { render json: { total: @total }, status: :ok }

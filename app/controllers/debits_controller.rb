@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 class DebitsController < ApplicationController
@@ -49,18 +48,9 @@ class DebitsController < ApplicationController
   def create
     price = sanitize_price(debit_params[:price])
 
-    unless numeric?(price)
-      return redirect_to new_debit_path(month_id: debit_params[:month_id]),
-                         notice: 'Preço deve conter apenas números e ponto ou virgula como separação'
-    end
+    return redirect_with_price_error!(new_debit_path(month_id: debit_params[:month_id])) unless numeric?(price)
 
-    @debit = create_new_debit_with_owner({
-                                           title: debit_params[:title],
-                                           price:,
-                                           paid: debit_params[:paid],
-                                           owner_id: debit_params[:owner_id],
-                                           month_id: debit_params[:month_id]
-                                         })
+    @debit = create_new_debit_with_owner(debit_params.merge({ price: }))
 
     respond_to do |format|
       if @debit.save
@@ -79,19 +69,10 @@ class DebitsController < ApplicationController
   def update
     price = sanitize_price(debit_params[:price])
 
-    unless numeric?(price)
-      return redirect_to debit_path(@debit, month_id: debit_params[:month_id]),
-                         notice: 'Preço deve conter apenas números e ponto ou virgula como separação'
-    end
+    return redirect_with_price_error!(debit_path(@debit, month_id: debit_params[:month_id])) unless numeric?(price)
 
     respond_to do |format|
-      if @debit.update({
-                         title: debit_params[:title],
-                         price:,
-                         paid: debit_params[:paid],
-                         owner_id: debit_params[:owner_id],
-                         month_id: debit_params[:month_id]
-                       })
+      if @debit.update(debit_params.merge({ price: }))
         format.html { redirect_to month_url(debit_params[:month_id]), notice: 'Debito foi atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @debit }
       else
@@ -116,6 +97,11 @@ class DebitsController < ApplicationController
 
   private
 
+  def redirect_with_price_error!(callback_path)
+    redirect_to(callback_path,
+                notice: 'Preço deve conter apenas números e ponto ou virgula como separação')
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_debit
     @debit = Debit.find(params[:id])
@@ -123,8 +109,7 @@ class DebitsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def debit_params
-    T.cast(params.require(:debit), ActionController::Parameters).permit(:id, :title, :price, :paid, :owner_id,
-                                                                        :month_id)
+    params.require(:debit).permit(:id, :title, :price, :paid, :owner_id, :month_id)
   end
 
   def numeric?(target)
@@ -135,20 +120,14 @@ class DebitsController < ApplicationController
 
   def create_new_debit_with_owner(obj_params)
     created_owner = Owner.find_or_create_by(name: obj_params[:owner_id].upcase)
-    @debit = Debit.new({
-                         title: obj_params[:title],
-                         price: obj_params[:price],
-                         paid: obj_params[:paid],
-                         owner_id: created_owner.id,
-                         month_id: obj_params[:month_id]
-                       })
+    @debit = Debit.new(obj_params.merge({ owner_id: created_owner.id }))
   end
 
+  # @param price String
+  # @return String
   def sanitize_price(price)
-    if price.empty?
-      '0'
-    else
-      price.gsub('.', '').gsub(',', '.')
-    end
+    return '0' if price.empty?
+
+    price.gsub('.', '').gsub(',', '.')
   end
 end

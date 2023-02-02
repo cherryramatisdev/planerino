@@ -1,7 +1,6 @@
-# typed: true
+# frozen_string_literal: true
 
 class Debit < ApplicationRecord
-  extend T::Sig
   before_save :transform_title
 
   validates :title, presence: { message: ' deve ser informado' }
@@ -12,7 +11,8 @@ class Debit < ApplicationRecord
   belongs_to :owner
   belongs_to :month
 
-  sig { params(id: Integer).returns(Debit) }
+  # @param id Integer
+  # @returns Debit
   def self.toggle_paid(id)
     debit = find(id)
 
@@ -24,6 +24,6 @@ class Debit < ApplicationRecord
   def transform_title
     return '' if title.nil?
 
-    T.must(title).upcase!
+    title.upcase!
   end
 end
