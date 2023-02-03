@@ -4,7 +4,9 @@ class YearsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @years = Year.all.where(user_id: current_user.id)
+    render inertia: 'index', props: {
+      events: Year.all.where(user_id: current_user.id)
+    }
   end
 
   def new

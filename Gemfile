@@ -74,11 +74,13 @@ end
 
 gem 'rubocop', '~> 1.38'
 
-gem 'tailwindcss-rails', '~> 2.0'
-
 gem 'devise', '~> 4.8'
 
 gem 'dalli', '~> 3.2'
 
 gem 'solargraph', '~> 0.48.0'
 gem 'solargraph-rails', '~> 1.1'
+
+gem 'inertia_rails', '~> 3.0'
+
+gem 'vite_rails', '~> 3.0'
