@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../actions/owner/change_owner'
+
 class DebitsController < ApplicationController
   before_action :set_debit, only: %i[show edit update destroy]
 
@@ -19,6 +21,13 @@ class DebitsController < ApplicationController
     @month_id = params[:month_id]
   end
 
+  def change_owner
+    @updated_debit = Actions::Owner::ChangeOwner.call(to_owner_id: params[:target_owner_id],
+                                                      origin_id: params[:origin_id])
+
+    redirect_to month_path(@updated_debit.month_id) unless @updated_debit.nil?
+  end
+
   # GET /get_debit_total?title=NUBANK?month_id=1
   def total
     @total = Debit.all.where(title: params[:title]).where(month_id: params[:month_id], paid: false).sum(&:price)
@@ -33,13 +42,13 @@ class DebitsController < ApplicationController
 
   # GET /update_paid/1
   def update_paid
-    @updated = Debit.toggle_paid(params[:id].to_s.to_i)
+    @@updated_debit = Debit.toggle_paid(params[:id].to_s.to_i)
     respond_to do |format|
-      if @updated.errors.empty?
+      if @@updated_debit.errors.empty?
         format.html { redirect_to month_path(params[:month_id]) }
         format.json { render json: { debit_paid: Debit.find(params[:id]).paid }, status: :ok }
       else
-        format.json { render json: @updated.errors, status: :unprocessable_entity }
+        format.json { render json: @@updated_debit.errors, status: :unprocessable_entity }
       end
     end
   end

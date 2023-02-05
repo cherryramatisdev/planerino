@@ -11,5 +11,7 @@ Rails.application.routes.draw do
   get '/owner/get_debit_total/:id', to: 'owner#total', as: :get_debit_total_per_owner
   get '/debit/get_debit_total', to: 'debits#total', as: :get_debit_total
 
+  post '/debit/change_owner', to: 'debits#change_owner', as: :change_owner
+
   root 'years#index'
 end

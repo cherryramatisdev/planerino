@@ -23,7 +23,7 @@
 
   <div class="flex flex-col gap-2">
     <% debit[1].each do |d| %>
-      <div class="flex flex-row">
+      <div class="flex flex-row" draggable="true" data-controller="drag" data-drag-target="debit" data-action="dragstart->drag#dragStart dragend->drag#dragEnd drop->drag#drop dragenter->drag#dragEnter dragleave->drag#dragLeave dragover->drag#dragOver" data-info="<%= {owner_id: d.owner_id}.to_json %>">
         <a href="#" class="flex flex-row items-center justify-between bg-white w-full text-black rounded-xl px-2 py-1" data-controller="debit" data-debit-target="payable" data-info="<%= {debit_title: d.title, id: d.id, month_id: month.id, update_paid_url: nil, owner_id: d.owner_id}.to_json %>" data-action="click->debit#pay">
           <span><%= number_to_brl(d.price)  %></span>
 
